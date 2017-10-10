@@ -11,4 +11,4 @@ client.on('error', function (err) {
    logger.error('redis error', err)
 })
 
-exports = module.exports = client
+module.exports = client
