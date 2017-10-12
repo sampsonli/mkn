@@ -9,11 +9,6 @@ const logger = require('./util/logs')
 const errorHandleMiddle = require('./util/error')
 const mongoose = require('./connect')
 
-// 初始化数据
-if(config.seedDB) { 
-	const initData = require('./config/seed') 
-	initData()
-}
 
 //log记录
 //router use : this.logger.error('msg')
@@ -30,6 +25,10 @@ app.on('error',(err,ctx)=>{
 	if (process.env.NODE_ENV != 'test') {
 		console.error('error', err)
 	}
+})
+
+app.listen(80, () => {
+	console.log('listen:80')
 })
 
 module.exports = app
