@@ -1,10 +1,10 @@
 'use strict'
 
 const path = require('path')
-// const session = require('koa-generic-session')
-const session = require('koa-session-store')
+const session = require('koa-generic-session')
+// const session = require('koa-session-store')
 // const RedisStore = require('koa-redis')
-const mongooseStore = require('koa-session-mongoose');
+const MongoStore = require('koa-generic-session-mongo')
 const responseTime = require('koa-response-time')
 const logger = require('koa-logger')
 const json = require('koa-json')
@@ -35,9 +35,12 @@ module.exports = function(app) {
     cookie: config.session.cookie
   }))*/
   app.use(session({
-      store: mongooseStore.create({
-          expires: 1000*5
-      })
+      key: 'mkn.sid',
+      store: new MongoStore({
+          // host: config.redis.host,
+          // port: config.redis.port
+      }),
+      cookie: config.session.cookie
   }))
   app.use(passport.initialize())
   app.use(compress())
