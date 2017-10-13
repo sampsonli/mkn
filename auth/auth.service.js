@@ -33,7 +33,7 @@ function isAuthenticated() {
         await next()
       },
       async (ctx,next) =>{
-        var user = await User.findById(ctx.state.user._id)
+        const user = await User.findById(ctx.state.user._id)
         if (!user) ctx.throw('UnauthorizedError',401)
         ctx.req.user = user
         await next()

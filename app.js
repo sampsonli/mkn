@@ -7,7 +7,7 @@ const app = new Koa()
 const config = require('./config/env')
 const logger = require('./util/logs')
 const errorHandleMiddle = require('./util/error')
-const mongoose = require('./connect')
+require('./connect')
 
 
 //log记录
@@ -19,6 +19,12 @@ app.use(async (ctx, next) => {
 //错误处理中间件
 app.use(errorHandleMiddle())
 require('./config/koa')(app)
+
+/*app.use(ctx => {
+    let n = ctx.session.views || 0;
+    ctx.session.views = ++n;
+    ctx.body = n + ' views';
+})*/
 require('./routes')(app)
 //错误监听
 app.on('error',(err,ctx)=>{

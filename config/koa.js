@@ -2,9 +2,8 @@
 
 const path = require('path')
 const session = require('koa-generic-session')
-// const session = require('koa-session-store')
-// const RedisStore = require('koa-redis')
-const MongoStore = require('koa-generic-session-mongo')
+const RedisStore = require('koa-redis')
+// const MongoStore = require('koa-generic-session-mongo')
 const responseTime = require('koa-response-time')
 const logger = require('koa-logger')
 const json = require('koa-json')
@@ -25,7 +24,7 @@ module.exports = function(app) {
   app.use(bodyParser())
   app.use(json())
   app.keys = [config.session.secrets]
-  /*app.use(session({
+  app.use(session({
     key: 'mkn.sid',
     store: RedisStore({
       host:config.redis.host,
@@ -33,15 +32,16 @@ module.exports = function(app) {
       auth_pass:config.redis.password || ''
     }),
     cookie: config.session.cookie
-  }))*/
-  app.use(session({
+  }))
+ /* app.use(session({
       key: 'mkn.sid',
       store: new MongoStore({
           // host: config.redis.host,
           // port: config.redis.port
       }),
       cookie: config.session.cookie
-  }))
+  }))*/
   app.use(passport.initialize())
+  // app.use(passport.session())
   app.use(compress())
 }
